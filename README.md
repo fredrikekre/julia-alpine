@@ -28,5 +28,5 @@ see [this issue][issue].
 
 [julia]: https://github.com/JuliaLang/julia
 [gh]: https://github.com/fredrikekre/julia-alpine/releases
-[dh]: https://cloud.docker.com/u/fredrikekre/repository/docker/fredrikekre/julia-alpine
+[dh]: https://hub.docker.com/r/fredrikekre/julia-alpine
 [issue]: https://github.com/JuliaLang/julia/issues/28805
