@@ -1,0 +1,245 @@
+diff --git a/Make.inc b/Make.inc
+index 4556bc6..5b8bdf6 100644
+--- a/Make.inc
++++ b/Make.inc
+@@ -938,7 +938,7 @@ USE_BINARYBUILDER := 0
+ endif
+ 
+ # This is the set of projects that BinaryBuilder dependencies are hooked up for.
+-BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
++BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT OBJCONV
+ $(foreach proj,$(BB_PROJECTS),$(if $(USE_BINARYBUILDER_$(proj)),,$(eval USE_BINARYBUILDER_$(proj) := $(USE_BINARYBUILDER))))
+ 
+ # Use the Assertions build
+diff --git a/contrib/refresh_bb_tarballs.sh b/contrib/refresh_bb_tarballs.sh
+index 9163257..8a7b306 100755
+--- a/contrib/refresh_bb_tarballs.sh
++++ b/contrib/refresh_bb_tarballs.sh
+@@ -11,7 +11,7 @@
+ TRIPLETS="i686-linux-gnu x86_64-linux-gnu aarch64-linux-gnu arm-linux-gnueabihf powerpc64le-linux-gnu i686-linux-musl x86_64-linux-musl aarch64-linux-musl arm-linux-musleabihf x86_64-apple-darwin14 x86_64-unknown-freebsd11.1 i686-w64-mingw32 x86_64-w64-mingw32"
+ 
+ # These are the projects currently using BinaryBuilder; both GCC-expanded and non-GCC-expanded:
+-BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind dsfmt"
++BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind dsfmt objconv"
+ BB_GCC_EXPANDED_PROJECTS="llvm openblas suitesparse openlibm"
+ 
+ # If we've been given a project name, filter down to that one:
+diff --git a/deps/Versions.make b/deps/Versions.make
+index f9648b6..509441b 100644
+--- a/deps/Versions.make
++++ b/deps/Versions.make
+@@ -30,6 +30,8 @@ LIBGIT2_VER = 0.27.7
+ LIBGIT2_BB_REL = 1
+ LIBUV_VER = 1.24.0
+ LIBUV_BB_REL = 1
++OBJCONV_VER = 2.49.0
++OBJCONV_BB_REL = 0
+ 
+ # Specify the version of the Mozilla CA Certificate Store to obtain.
+ # The versions of cacert.pem are identified by the date (YYYY-MM-DD) of their changes.
+diff --git a/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..7087f1a
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++96565650d0743983f9a17d3e6a932be6
+diff --git a/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..d19d147
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.aarch64-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++6d1295e2c48b9e59f11ef935e7ccbc69ea234cbcfde1aaea9cbbb08ee6d5dcb6c3426ed8ac66ff95f8d2c8cec19767c67b1d9ba7e4698eacbe8d8b5d33cbf178
+diff --git a/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..acc1937
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++364900012019f8fd8e33834b43f5de58
+diff --git a/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..d4d7c66
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.aarch64-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++a5ac81da5e3d1a0d54a951b444ae5a2a49c00eee3482be1fb835efe1a068ca825bc8d9de6540e5909f04bb5b9c52459487afb6fc549f72aacacd683f82497354
+diff --git a/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/md5
+new file mode 100644
+index 0000000..c98ef35
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/md5
+@@ -0,0 +1 @@
++5f87140ee2b7d2b5c4d7d5e666edb793
+diff --git a/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/sha512
+new file mode 100644
+index 0000000..bc4bdd9
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.arm-linux-gnueabihf.tar.gz/sha512
+@@ -0,0 +1 @@
++cb2b3665d3edcd3b3386101d0ff22002383b25c3e9b58b03eb5387888b5cae2782f984e6a39542d395f2c100c8fd81c89a0aed79e5d7581647bf024eefa5f6c3
+diff --git a/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/md5
+new file mode 100644
+index 0000000..5286ffd
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/md5
+@@ -0,0 +1 @@
++8dc7f75d66ece64f490d803751ef2315
+diff --git a/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/sha512
+new file mode 100644
+index 0000000..46aa7a6
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.arm-linux-musleabihf.tar.gz/sha512
+@@ -0,0 +1 @@
++45f194f2937329fc424fe5abef485e542362b38b17645cdc528f3ce7571445bf4b1f29733d8eef3bdd7b417ea11c8bf45879cc96c4865eaef7fe0baf51d862cd
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..e2b3b2c
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++85149305b9dd209c1e12f368e9c023aa
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..079df7f
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++b909504ac1727ddc4311713320b553e483451123c0706d33a5dea3b2c0454040651ba23654585087ef20f7aa303120362008115e9b52d9a234889624373cb800
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..58812bc
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++ec5e26c8a2879e991c384b9a36758e60
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..104c1f6
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++43440866002686b9eca5998da7d81e3875da366934b72217fdc26915722b4d446f06a02e7e8b8f5a88ce26faac650be67f1f88b90b520e845a61ca640dd6b1d0
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/md5
+new file mode 100644
+index 0000000..6f8e529
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/md5
+@@ -0,0 +1 @@
++84055d1c86579824d4a634adae1cdfd2
+diff --git a/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/sha512
+new file mode 100644
+index 0000000..959c460
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.i686-w64-mingw32.tar.gz/sha512
+@@ -0,0 +1 @@
++fc980fa01e50f42f01e42fb5fbdb96a89500f757991c07a888f9cb22dee97f1a19e33f7bed43d9372a3ba500d95d0420e59783446ee28230f3f30ac878fa4e36
+diff --git a/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..5a67171
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++69b3d436965c139bfcb0e0389d25d73f
+diff --git a/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..ff113ae
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.powerpc64le-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++f5f849ed48ce4a4a12b59d0ef0bd749d07e323ddacec55039241202b56a3035e546073e5596aa4598f06cd78a8eb9a8d97af3ada448ffab86e6a1d8700956458
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/md5
+new file mode 100644
+index 0000000..e25f214
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/md5
+@@ -0,0 +1 @@
++3c17020656896f95e3f402cb29429112
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/sha512
+new file mode 100644
+index 0000000..05add1a
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-apple-darwin14.tar.gz/sha512
+@@ -0,0 +1 @@
++2cd495304eb4c8ca3f49be8e39b62d835fafd4d8f2bb9ab55fe90b77a1c34cbee240e6bfb1bb47a04eef77029731532eae27e9a1bf530ba2117fad01c6c9cbb7
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..04dbde1
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++907e188a3ae14dd9f25b298dffc6d3d3
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..ec491e8
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++01ef0aeb8dcddaefe2432d1c9d618f647a87bb4bf06ec64207630ad531982c47b7470b6b46b76c3358bf9eb2c28a30509fb2a1197643f936c5034247f7c3cac0
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..44ebf4b
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++ff5ce7c16a46a718133578818032c6b8
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..0b004cc
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++b5e2a9fb1ebc3ad2442ca4b636a126924bd9d567261cc8d1d816969454d11dcaeb4f9f1848183c309a63c8a6ad7da8d5bdc111765d8cc1f4c6aabea9eb0fd30a
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/md5
+new file mode 100644
+index 0000000..6ade781
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/md5
+@@ -0,0 +1 @@
++6c86252ee6d60fc171030fd602e16ac7
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/sha512
+new file mode 100644
+index 0000000..0bca4c3
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-unknown-freebsd11.1.tar.gz/sha512
+@@ -0,0 +1 @@
++a178fae5a07561092b2f7d392894e52678314f923579cfa23b45ac6501efbd11cccd23a3dc9493ae935dec7b4dcce44b34ddebe0f472575101d03c37e4ee3ce3
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/md5 b/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/md5
+new file mode 100644
+index 0000000..266627f
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/md5
+@@ -0,0 +1 @@
++b7e049750328ea767d2da84477327cf5
+diff --git a/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/sha512 b/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/sha512
+new file mode 100644
+index 0000000..4595424
+--- /dev/null
++++ b/deps/checksums/Objconv.v2.49.0.x86_64-w64-mingw32.tar.gz/sha512
+@@ -0,0 +1 @@
++caa18e7101840462ec160e0735481f63dae4294508a1e4010610771310d0194eb284a10ab0937f3c6da41f99055886408910d46892e1e8f4db4090cf88872e9c
+diff --git a/deps/objconv.mk b/deps/objconv.mk
+index d62bc55..355cf39 100644
+--- a/deps/objconv.mk
++++ b/deps/objconv.mk
+@@ -1,5 +1,7 @@
+ ## objconv ##
+ 
++ifneq ($(USE_BINARYBUILDER_OBJCONV),1)
++
+ $(SRCCACHE)/objconv.zip: | $(SRCCACHE)
+ 	$(JLDOWNLOAD) $@ http://www.agner.org/optimize/objconv.zip
+ 
+@@ -31,3 +33,11 @@ configure-objconv: extract-objconv
+ compile-objconv: $(BUILDDIR)/objconv/build-compiled
+ fastcheck-objconv: check-objconv
+ check-objconv: compile-objconv
++
++else
++
++OBJCONV_BB_URL_BASE := https://github.com/JuliaPackaging/Yggdrasil/releases/download/Objconv-v$(OBJCONV_VER)-$(OBJCONV_BB_REL)
++OBJCONV_BB_NAME := Objconv.v$(OBJCONV_VER)
++$(eval $(call bb-install,objconv,OBJCONV,false))
++
++endif

@@ -1,0 +1,244 @@
+diff --git a/Make.inc b/Make.inc
+index e7bcbad..4556bc6 100644
+--- a/Make.inc
++++ b/Make.inc
+@@ -938,7 +938,7 @@ USE_BINARYBUILDER := 0
+ endif
+
+ # This is the set of projects that BinaryBuilder dependencies are hooked up for.
+-BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND
++BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
+ $(foreach proj,$(BB_PROJECTS),$(if $(USE_BINARYBUILDER_$(proj)),,$(eval USE_BINARYBUILDER_$(proj) := $(USE_BINARYBUILDER))))
+
+ # Use the Assertions build
+diff --git a/contrib/refresh_bb_tarballs.sh b/contrib/refresh_bb_tarballs.sh
+index 5258ae3..9163257 100755
+--- a/contrib/refresh_bb_tarballs.sh
++++ b/contrib/refresh_bb_tarballs.sh
+@@ -11,7 +11,7 @@
+ TRIPLETS="i686-linux-gnu x86_64-linux-gnu aarch64-linux-gnu arm-linux-gnueabihf powerpc64le-linux-gnu i686-linux-musl x86_64-linux-musl aarch64-linux-musl arm-linux-musleabihf x86_64-apple-darwin14 x86_64-unknown-freebsd11.1 i686-w64-mingw32 x86_64-w64-mingw32"
+
+ # These are the projects currently using BinaryBuilder; both GCC-expanded and non-GCC-expanded:
+-BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind"
++BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind dsfmt"
+ BB_GCC_EXPANDED_PROJECTS="llvm openblas suitesparse openlibm"
+
+ # If we've been given a project name, filter down to that one:
+diff --git a/deps/Versions.make b/deps/Versions.make
+index 6d04e16..f9648b6 100644
+--- a/deps/Versions.make
++++ b/deps/Versions.make
+@@ -3,6 +3,7 @@ LLVM_BB_REL = 6+nowasm
+ PCRE_VER = 10.31
+ PCRE_BB_REL = 0
+ DSFMT_VER = 2.2.3
++DSFMT_BB_REL = 0
+ OPENBLAS_VER = 0.3.5
+ OPENBLAS_BB_REL = 1
+ LAPACK_VER = 3.5.0
+diff --git a/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..6c4c474
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++f6a70363ea796a63ed1aa2e0c68cca9f
+diff --git a/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..efa055e
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++f4980b557041922dadb2dc89732a332dfac360471194d37e30c85518dff5072412d28213f802ed0f5d791717e3bdebba7ca0bfe11a52b2ef16e633adfe13a4a3
+diff --git a/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..a063795
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++d349f16c392747610de2b1e30f5dc844
+diff --git a/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..fe63670
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++2694a265d05acb82e1be3dbe8f1ad533c83af038c3a8f184cf0a0c8088a09ebfeffae02c1821cbcacf2a34a2fff091d21a094a900ee1ab8fead8a78bd3e0a70e
+diff --git a/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/md5
+new file mode 100644
+index 0000000..0933516
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/md5
+@@ -0,0 +1 @@
++10b22af1aafd1d06efcfb9bad249d99d
+diff --git a/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/sha512
+new file mode 100644
+index 0000000..287054b
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.arm-linux-gnueabihf.tar.gz/sha512
+@@ -0,0 +1 @@
++545a8801d8e176448306ed77b482393f62f97a0e7a3e169ee08a868d5a405b5e87f4698e2915740d56587173117f0894686b59d0f81d29f3c1668a40d0526ad8
+diff --git a/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/md5
+new file mode 100644
+index 0000000..0a401a0
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/md5
+@@ -0,0 +1 @@
++eb01530f3e4be7d2a0b7b3480e71dadd
+diff --git a/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/sha512
+new file mode 100644
+index 0000000..7a5874e
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.arm-linux-musleabihf.tar.gz/sha512
+@@ -0,0 +1 @@
++28cdc41f3e30efcfb1327b2ea5ce2405a0cb72238ee8722b2da925bbec4d683ded161621001f64d028268abd969d1ed655a9ec9758c9a6c1bacd96e4d9c25f13
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..388ef52
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++1b78e8985d28b42ad083a35668d27ee8
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..9b7802f
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++757a74dbab1c483e524085fbe12d5b961282a412b86a6c3ef4be9d5a88bd3165d761eae7c39f49b3d3069253bb3a35704f9400b0377c16b360041e7929355b87
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..80b917f
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++52c2f2399832fbc68e1a3585b0fd2ee8
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..631a9bc
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++3132e3a17cc6dc9cd47c1f602ec7ab3620d526c09c0fda1c77bcf49e42671132853b6acf4e917bd327afcbbdf19ed0e8590ba5b3d560c72d7b9be465152dd4a0
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/md5
+new file mode 100644
+index 0000000..5c14478
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/md5
+@@ -0,0 +1 @@
++23b2ca964fcb40f2eff7140cb185d3ee
+diff --git a/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/sha512
+new file mode 100644
+index 0000000..b3abe02
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.i686-w64-mingw32.tar.gz/sha512
+@@ -0,0 +1 @@
++d1061dbe44ec777cf9303295d92eae31d80f13a5e2a79710928ae96ff6899ed4aa155037af93c369d1880e13725294276556c32c174f4e94566b7ad898c3636b
+diff --git a/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..d23749c
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++69ed63fb5d330b216107670224c9d751
+diff --git a/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..753e61d
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.powerpc64le-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++e7668fc13899a727b54ab034383686c05c7903a90e5eef257928218f6114e2cfabb1bbcef230e4f4f36b131976fc6e36193192666ea781330de115dacd00fa29
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/md5
+new file mode 100644
+index 0000000..fe759a7
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/md5
+@@ -0,0 +1 @@
++9a978d0d59b85fffdf8edec751c4ada4
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/sha512
+new file mode 100644
+index 0000000..527bc5a
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-apple-darwin14.tar.gz/sha512
+@@ -0,0 +1 @@
++1517dca3c35d96a3dae563cbf06325a8ea68689b59ed74eaf7775e021a4e853df2f023559cb730ced48691a8688cb8214dbbb18397c5944ea838ac42a2e42984
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/md5
+new file mode 100644
+index 0000000..6f2b1f3
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/md5
+@@ -0,0 +1 @@
++1eb95aa2ae1aa96207964f0106a76355
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/sha512
+new file mode 100644
+index 0000000..9e03fa4
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-gnu.tar.gz/sha512
+@@ -0,0 +1 @@
++b4230d8b5b505de81f7a44406df70ad1a7318caac461bca656fcf06251f4af5a7d063b7f139c083858d674c22bfb02c8069a752d21acf0e99d0f0e97fac6f287
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/md5
+new file mode 100644
+index 0000000..bed0a5a
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/md5
+@@ -0,0 +1 @@
++33aae580ccada0715cd462299221f94b
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/sha512
+new file mode 100644
+index 0000000..5db27fe
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-linux-musl.tar.gz/sha512
+@@ -0,0 +1 @@
++2888eb510f7fb89110357d8590b751c3a80f9ee659f202d25e233fb03531676b7c40bd754e4a57e592f74323d41265b24768621f1900908cd3825e95b7e61db8
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/md5
+new file mode 100644
+index 0000000..2c60431
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/md5
+@@ -0,0 +1 @@
++6e388e1e437cfeb020b67f47201b8f66
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/sha512
+new file mode 100644
+index 0000000..6d682eb
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-unknown-freebsd11.1.tar.gz/sha512
+@@ -0,0 +1 @@
++15e9ddc274e582775fafb4ccb0b824dab44afad2c950481d4cac71fa94f335fb91f1cf94967e321a2f2ded3f10a02470ef79108f598a0948e6903dbbd5be082d
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/md5
+new file mode 100644
+index 0000000..7adfb50
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/md5
+@@ -0,0 +1 @@
++731892f1ec7857ed0d199aac541c9f8a
+diff --git a/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/sha512 b/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/sha512
+new file mode 100644
+index 0000000..e04a600
+--- /dev/null
++++ b/deps/checksums/dSFMT.v2.2.3.x86_64-w64-mingw32.tar.gz/sha512
+@@ -0,0 +1 @@
++014a86aee1c76ac818cc16d2bb494b6d028321d701c238ac656ed3309b68d8105216e7574b2984cda79b293345a493fef5051da943fcf5ce5c7eeadb58c72772
+diff --git a/deps/dsfmt.mk b/deps/dsfmt.mk
+index a8880e5..c3e4a60 100644
+--- a/deps/dsfmt.mk
++++ b/deps/dsfmt.mk
+@@ -1,5 +1,7 @@
+ ## DSFMT ##
+
++ifneq ($(USE_BINARYBUILDER_DSFMT),1)
++
+ DSFMT_CFLAGS := $(CFLAGS) -DNDEBUG -DDSFMT_MEXP=19937 $(fPIC) -DDSFMT_DO_NOT_USE_OLD_NAMES
+ ifneq ($(USEMSVC), 1)
+ DSFMT_CFLAGS += -O3 -finline-functions -fomit-frame-pointer -fno-strict-aliasing \
+@@ -60,3 +62,11 @@ configure-dsfmt: extract-dsfmt
+ compile-dsfmt: $(BUILDDIR)/dsfmt-$(DSFMT_VER)/build-compiled
+ fastcheck-dsfmt: check-dsfmt
+ check-dsfmt: $(BUILDDIR)/dsfmt-$(DSFMT_VER)/build-checked
++
++else
++
++DSFMT_BB_URL_BASE := https://github.com/JuliaPackaging/Yggdrasil/releases/download/dSFMT-v$(DSFMT_VER)-$(DSFMT_BB_REL)
++DSFMT_BB_NAME := dSFMT.v$(DSFMT_VER)
++$(eval $(call bb-install,dsfmt,DSFMT,false))
++
++endif # USE_BINARYBUILDER_DSFMT
