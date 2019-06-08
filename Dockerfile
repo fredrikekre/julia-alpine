@@ -8,7 +8,12 @@ RUN git clone --progress https://github.com/JuliaLang/julia.git . && \
     fi
 COPY patches/ patches/
 RUN ./patches/apply-patches.sh $VERSION
-RUN make -j4 JULIA_COMMIT=1.2.0 && make JULIA_COMMIT=1.2.0 binary-dist
+RUN make \
+    JULIA_COMMIT=1.2.0 \
+    MARCH="x86-64" \
+    JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)" \
+    -j4 \
+    binary-dist
 
 FROM alpine:3.9.3
 ENV JULIA_PATH /usr/local/julia
