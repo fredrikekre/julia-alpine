@@ -1,4 +1,4 @@
-FROM alpine:3.9.3 as builder
+FROM alpine:3.10.2 as builder
 ARG VERSION
 RUN apk add --update git make tar gcc python gfortran g++ perl
 WORKDIR /julia-source
@@ -15,7 +15,7 @@ RUN make \
     -j4 \
     binary-dist
 
-FROM alpine:3.9.3
+FROM alpine:3.10.2
 ENV JULIA_PATH /usr/local/julia
 ENV PATH $JULIA_PATH/bin:$PATH
 COPY --from=builder /julia-source/julia*.tar.gz julia.tar.gz
