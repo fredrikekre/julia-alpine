@@ -1,6 +1,6 @@
 ifneq ($(VERSION),)
 	DOCKER_IMAGE_TAG := :$(shell echo $(VERSION) | cut -c 2-)
-	TARBALL_NAME := julia-$(shell echo $(VERSION) | cut -c 2-)-x86_64-alpine-linux-musl.tar.gz
+	TARBALL_NAME := julia-$(shell echo $(VERSION) | cut -c 2-)-x86_64-linux-musl.tar.gz
 endif
 image:
 	docker build --build-arg VERSION=$(VERSION) -t fredrikekre/julia-alpine$(DOCKER_IMAGE_TAG) .
