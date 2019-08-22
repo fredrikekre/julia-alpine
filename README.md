@@ -1,6 +1,6 @@
 # julia-alpine
 
-Building docker images and binaries of [JuliaLang/julia][julia] on using Alpine Linux.
+Building docker images and binaries of [JuliaLang/julia][julia] using Alpine Linux.
 
 Output tarballs with the Julia binary can be downloaded from [GitHub releases][gh]
 and the docker images can be found on [Docker Hub][dh].
