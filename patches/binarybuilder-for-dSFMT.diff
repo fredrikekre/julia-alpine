@@ -1,31 +1,31 @@
 diff --git a/Make.inc b/Make.inc
-index e7bcbad..4556bc6 100644
+index 47c8a9a..3b4af91 100644
 --- a/Make.inc
 +++ b/Make.inc
-@@ -938,7 +938,7 @@ USE_BINARYBUILDER := 0
- endif
-
+@@ -944,7 +944,7 @@ USE_BINARYBUILDER_GMP ?= 0
+ USE_BINARYBUILDER_MPFR ?= 0
+ 
  # This is the set of projects that BinaryBuilder dependencies are hooked up for.
--BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND
-+BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
- $(foreach proj,$(BB_PROJECTS),$(if $(USE_BINARYBUILDER_$(proj)),,$(eval USE_BINARYBUILDER_$(proj) := $(USE_BINARYBUILDER))))
-
- # Use the Assertions build
+-BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM MBEDTLS LIBSSH2 CURL LIBGIT2 PCRE LIBUV UNWIND
++BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM MBEDTLS LIBSSH2 CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
+ define SET_BB_DEFAULT
+ # First, check to see if BB is disabled on a global setting
+ ifeq ($$(USE_BINARYBUILDER),0)
 diff --git a/contrib/refresh_bb_tarballs.sh b/contrib/refresh_bb_tarballs.sh
-index 5258ae3..9163257 100755
+index 63504e2..f3b2006 100755
 --- a/contrib/refresh_bb_tarballs.sh
 +++ b/contrib/refresh_bb_tarballs.sh
-@@ -11,7 +11,7 @@
+@@ -12,7 +12,7 @@
  TRIPLETS="i686-linux-gnu x86_64-linux-gnu aarch64-linux-gnu arm-linux-gnueabihf powerpc64le-linux-gnu i686-linux-musl x86_64-linux-musl aarch64-linux-musl arm-linux-musleabihf x86_64-apple-darwin14 x86_64-unknown-freebsd11.1 i686-w64-mingw32 x86_64-w64-mingw32"
-
+ 
  # These are the projects currently using BinaryBuilder; both GCC-expanded and non-GCC-expanded:
 -BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind"
 +BB_PROJECTS="gmp mbedtls libssh2 mpfr curl libgit2 pcre libuv unwind osxunwind dsfmt"
  BB_GCC_EXPANDED_PROJECTS="llvm openblas suitesparse openlibm"
-
+ 
  # If we've been given a project name, filter down to that one:
 diff --git a/deps/Versions.make b/deps/Versions.make
-index 6d04e16..f9648b6 100644
+index ff103cb..73d6355 100644
 --- a/deps/Versions.make
 +++ b/deps/Versions.make
 @@ -3,6 +3,7 @@ LLVM_BB_REL = 6+nowasm
@@ -34,7 +34,7 @@ index 6d04e16..f9648b6 100644
  DSFMT_VER = 2.2.3
 +DSFMT_BB_REL = 0
  OPENBLAS_VER = 0.3.5
- OPENBLAS_BB_REL = 1
+ OPENBLAS_BB_REL = 2
  LAPACK_VER = 3.5.0
 diff --git a/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/md5 b/deps/checksums/dSFMT.v2.2.3.aarch64-linux-gnu.tar.gz/md5
 new file mode 100644
@@ -224,7 +224,7 @@ index a8880e5..c3e4a60 100644
 +++ b/deps/dsfmt.mk
 @@ -1,5 +1,7 @@
  ## DSFMT ##
-
+ 
 +ifneq ($(USE_BINARYBUILDER_DSFMT),1)
 +
  DSFMT_CFLAGS := $(CFLAGS) -DNDEBUG -DDSFMT_MEXP=19937 $(fPIC) -DDSFMT_DO_NOT_USE_OLD_NAMES

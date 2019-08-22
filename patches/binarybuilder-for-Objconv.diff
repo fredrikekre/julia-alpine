@@ -1,21 +1,21 @@
 diff --git a/Make.inc b/Make.inc
-index 4556bc6..5b8bdf6 100644
+index 3b4af91..f7f1ea2 100644
 --- a/Make.inc
 +++ b/Make.inc
-@@ -938,7 +938,7 @@ USE_BINARYBUILDER := 0
- endif
+@@ -944,7 +944,7 @@ USE_BINARYBUILDER_GMP ?= 0
+ USE_BINARYBUILDER_MPFR ?= 0
  
  # This is the set of projects that BinaryBuilder dependencies are hooked up for.
--BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
-+BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM GMP MBEDTLS LIBSSH2 MPFR CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT OBJCONV
- $(foreach proj,$(BB_PROJECTS),$(if $(USE_BINARYBUILDER_$(proj)),,$(eval USE_BINARYBUILDER_$(proj) := $(USE_BINARYBUILDER))))
- 
- # Use the Assertions build
+-BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM MBEDTLS LIBSSH2 CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT
++BB_PROJECTS := OPENBLAS LLVM SUITESPARSE OPENLIBM MBEDTLS LIBSSH2 CURL LIBGIT2 PCRE LIBUV UNWIND DSFMT OBJCONV
+ define SET_BB_DEFAULT
+ # First, check to see if BB is disabled on a global setting
+ ifeq ($$(USE_BINARYBUILDER),0)
 diff --git a/contrib/refresh_bb_tarballs.sh b/contrib/refresh_bb_tarballs.sh
-index 9163257..8a7b306 100755
+index f3b2006..d732b04 100755
 --- a/contrib/refresh_bb_tarballs.sh
 +++ b/contrib/refresh_bb_tarballs.sh
-@@ -11,7 +11,7 @@
+@@ -12,7 +12,7 @@
  TRIPLETS="i686-linux-gnu x86_64-linux-gnu aarch64-linux-gnu arm-linux-gnueabihf powerpc64le-linux-gnu i686-linux-musl x86_64-linux-musl aarch64-linux-musl arm-linux-musleabihf x86_64-apple-darwin14 x86_64-unknown-freebsd11.1 i686-w64-mingw32 x86_64-w64-mingw32"
  
  # These are the projects currently using BinaryBuilder; both GCC-expanded and non-GCC-expanded:
@@ -25,7 +25,7 @@ index 9163257..8a7b306 100755
  
  # If we've been given a project name, filter down to that one:
 diff --git a/deps/Versions.make b/deps/Versions.make
-index f9648b6..509441b 100644
+index 73d6355..5eeeef2 100644
 --- a/deps/Versions.make
 +++ b/deps/Versions.make
 @@ -30,6 +30,8 @@ LIBGIT2_VER = 0.27.7
