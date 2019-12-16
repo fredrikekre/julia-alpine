@@ -1,4 +1,4 @@
-FROM alpine:3.10.2 as builder
+FROM alpine:3.10.3 as builder
 ARG VERSION
 RUN apk add --update git make tar gcc python gfortran g++ perl
 WORKDIR /julia-source
@@ -9,13 +9,13 @@ RUN git clone --progress https://github.com/JuliaLang/julia.git . && \
 COPY patches/ patches/
 RUN ./patches/apply-patches.sh $VERSION
 RUN make \
-    JULIA_COMMIT=1.2.0 \
+    JULIA_COMMIT=$(echo $VERSION | cut -c 2-) \
     MARCH="x86-64" \
     JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)" \
     -j4 \
     binary-dist
 
-FROM alpine:3.10.2
+FROM alpine:3.10.3
 ENV JULIA_PATH /usr/local/julia
 ENV PATH $JULIA_PATH/bin:$PATH
 COPY --from=builder /julia-source/julia*.tar.gz julia.tar.gz
