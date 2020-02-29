@@ -17,3 +17,7 @@ endif
 	cd build && \
 	sha256sum * > julia-$(shell echo $(VERSION) | cut -c 2-).sha256 && \
 	cd ..
+push-image:
+	docker push fredrikekre/julia-alpine$(DOCKER_IMAGE_TAG)
+push-tarball:
+	ghr -soft $(GHR_ARGS) $(VERSION)+$(BUILD_NUMBER) build/

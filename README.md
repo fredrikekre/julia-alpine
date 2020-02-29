@@ -12,13 +12,20 @@ To build the image run
 make image VERSION=$(JULIA_TAG)
 ```
 where `JULIA_TAG` is the git tag to build. If `VERSION` is not specified Julia's master
-branch will be built.
+branch will be built. To push the tag to Docker Hub, run:
+```sh
+make push-image VERSION=$(JULIA_TAG)
+```
 
 To build the tarball with the Julia binary, run
 ```
 make binary-dist VERSION=$(JULIA_TAG)
 ```
 which will build and extract the binary to a `build/` directory, together with a sha256sum file.
+To push the tarball to GitHub releases, run:
+```sh
+make push-tarball VERSION=$(JULIA_TAG) BUILD_NUMBER=$(BUILD_NUMBER) GHR_ARGS=$(...)
+```
 
 ## Status for Julia on musl libc
 
