@@ -1,6 +1,6 @@
 FROM alpine:3.12.0 as builder
 ARG VERSION
-RUN apk add --update git make tar gcc python gfortran g++ perl
+RUN apk add --update git make tar gcc python3 gfortran g++ perl
 WORKDIR /julia-source
 RUN git clone --progress https://github.com/JuliaLang/julia.git . && \
     if [[ "$VERSION" ]]; then \
