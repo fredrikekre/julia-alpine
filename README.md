@@ -1,3 +1,5 @@
+# :warning: Julia now builds and distributes official binaries for musl libc, and thus there are now Alpine-based images in the [official docker repo](https://hub.docker.com/_/julia). This repository is therefore archived.:warning: 
+
 # julia-alpine
 
 Building docker images and binaries of [JuliaLang/julia][julia] using Alpine Linux.
